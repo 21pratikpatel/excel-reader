@@ -25,7 +25,6 @@ each Python and Django series.
 
 Startup up a project like so...
 
-    cd company
     python -m pip install -r requirements.txt
     python manage.py makemigrations
     python manage.py migrate
