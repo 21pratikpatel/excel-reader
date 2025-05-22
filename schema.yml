@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Excel Reader
+  version: 1.0.0
+  description: Excel reader read data from excel sheet and upload it to database
+paths:
+  /employee/upload-employees/:
+    post:
+      operationId: employee_upload_employees_create
+      tags:
+      - employee
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileFormRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+          description: ''
+components:
+  schemas:
+    Company:
+      type: object
+      properties:
+        company_name:
+          type: string
+          maxLength: 150
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employee'
+      required:
+      - company_name
+      - employees
+    Employee:
+      type: object
+      properties:
+        employee_id:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 12
+        salary:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+        manager_id:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+        department_id:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+      required:
+      - department_id
+      - employee_id
+      - first_name
+      - last_name
+      - manager_id
+      - phone_number
+      - salary
+    FileFormRequest:
+      type: object
+      properties:
+        file_upload:
+          type: string
+          format: binary
+          pattern: (?:xlsx|xls)$
+      required:
+      - file_upload
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
