@@ -1,9 +1,4 @@
-# [DRF Practical by Pratik Patel][docs]
-
-**Awesome web-browsable Web APIs.**
-
-Full documentation for the project is available at [https://www.django-rest-framework.org/][docs].
-
+# Excel sheet reader by Pratik Patel
 ---
 
 # Overview
